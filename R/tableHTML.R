@@ -559,6 +559,12 @@ print.tableHTML <- function(x, viewer = TRUE, ...) {
    utils::browseURL(file)
   }
 
+ } else if (!interactive() & isTRUE(getOption('knitr.in.progress'))) {
+  file <- tempfile(fileext = '.png')
+  tableHTML_to_image(x, file = file)
+
+  return(knitr::include_graphics(file))
+
  } else if (viewer == FALSE | !interactive()) {
   cat(x, ...)
  }
